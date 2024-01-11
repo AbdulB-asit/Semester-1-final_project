@@ -1,0 +1,210 @@
+int main() {
+
+    node* head = new node; /*inintializing node*/
+    head->link = NULL;
+
+    int n, e, m, pos,num;
+    string str;
+    char st;
+    int press; /*initializing further variables*/
+    bool fin = false, kon = false;
+    cout << setw(85) << right << "---------------------------------------------------------\n";
+    cout << setw(85) << right << "\"Welcome respected user to the list management system!!!\"\n";
+    cout << setw(86) << right << "---------------------------------------------------------\n\n";
+    do {
+        cout << "Press \"c\" to continue or \"u\" to understand what a linked list is\"\n\n";
+        char opt;
+        cin >> opt;
+
+        switch (opt) {
+            case 'c': {
+                cout << "how many nodes you would like in your list: ";
+                cin >> n;
+                kon = true;
+            }
+                break;
+            case 'u': {
+                cout << "\n\nA linked list is a linear data structure, in which the elements are not stored at contiguous\n";
+                cout << "memory locations.The elements in a linked list are linked using pointers.\n";
+                cout << "In simple words, a linked list consists of nodes where each node contains a data field \n";
+                cout << "and a reference(link) to the next node in the list.\n\n";
+
+                cout << "how many nodes you would like in your list: ";
+                cin >> n;
+                kon = true;
+            }
+                break;
+
+            default: {
+                cout << "\"Please enter valid query!!!\"\n\n";
+            }
+                break;
+        }
+    } while (kon != true);
+
+    for (int i = 1; i <= n; i++) {
+        if (i == 1) {
+            cout << "enter number #01: ";
+            cin >> e;
+            insert_beginning(head, e);
+        } else {
+            cout << "enter number #0" << i << ": ";
+            cin >> e;
+            insert_end(head, e);
+        }
+    }
+    do {
+        cout << endl;
+        cout << setw(85) << right << "--------------------------------------------------------" << endl;
+        cout << setw(79) << right << "|     PRESS ON ANY OF THE BELOW OPTIONS TO PROCEED " << setw(7) << right << "|" << endl;
+        cout << setw(86) << right << "|--------------------------------------------------------|" << endl;
+        cout << setw(29) << "|" << "1. Print Your List" << setw(39) << right << "|" << endl;
+        cout << setw(29) << "|" << "2. Insert A Number in The List" << setw(27) << right << "|" << endl;
+        cout << setw(29) << "|" << "3. Update a Node" << setw(41) << right << "|" << endl;
+        cout << setw(29) << "|" << "4. Delete the Head Node" << setw(34) << right << "|" << endl;
+        cout << setw(29) << "|" << "5. Delete A Particular Node" << setw(30) << right << "|" << endl;
+        cout << setw(29) << "|" << "6. Search A Number In The List" << setw(27) << right << "|" << endl;
+        cout << setw(29) << "|" << "7. Reverse The List" << setw(38) << right << "|" << endl;
+        cout << setw(29) << "|" << "8. Sort The List" << setw(41) << right << "|" << endl;
+        cout << setw(29) << "|" << "9. Check The Size Of The List" << setw(28) << right << "|" << endl;
+        cout << setw(29) << "|" << "10. Swap Nodes" << setw(43) << right << "|" << endl;
+        cout << setw(29) << "|" << "11. Exit The Program" << setw(37) << right << "|" << endl;
+        cout << setw(85) << right << "--------------------------------------------------------" << endl;
+
+        cout << "Please enter your choice here: ";
+        cin >> press;
+
+        switch (press) {
+
+            case 1: {
+                traverse(head);
+                break;
+            }
+
+            case 2: {
+                cout << "\n\nPlease tell at which position you want to add your number: ";
+                cin >> pos;
+
+                if (pos > n or pos <= 0) {
+                    cout << "\nThis position doesn't exist in the list.\n\n";
+                    break;
+                }
+
+                if (insert_at(head, pos, size_determine(head))) {
+                    cout << "Your updated list is: ";
+                    traverse_temp(head);
+                }
+                break;
+            }
+
+            case 3: {
+                int num;
+                cout << "\n\nPlease tell which number you need to update: ";
+                cin >> num;
+
+                if (update_nodeNum(head, num)) {
+                    cout << "Your updated list is: ";
+                    traverse_temp(head);
+                }
+
+                break;
+            }
+//            case 4: {
+//            	
+//				break;
+//			}
+				case 5: {
+					cout << "Do you want to enter the number (num) or the position (pos) of the node in the list? ";
+					cin >> str;
+
+					if (str == "pos"){
+						cout<<"Enter the position: ";					
+						cin >> pos;
+						del_at(head, pos);
+					}
+						else if(str == "num"){							
+							cout<<"Enter the number: ";
+							cin >> num;
+							del_data(head,num);
+						}
+
+
+					cout << "The updated list is: \n";
+					traverse_temp(head);
+
+					break;
+				}
+
+				case 6: {
+					cout << "Enter which number to find: ";
+					cin >> m;
+					search(head, m);
+
+					break;
+				}
+
+				case 7: {
+					cout << "The original list was: ";
+					traverse_temp(head);
+
+					reverse(head);
+					cout << "\nThe list reversed is: \n";
+					traverse_temp(head);
+
+					break;
+				}
+
+				case 8: {
+					cout << "The original list was: ";
+					traverse_temp(head);
+
+					sort(head);
+					cout << "\nThe sorted list is: \n";
+					traverse_temp(head);
+
+					break;
+				}
+
+				case 9: {
+					cout << "\nThe size of your list is: " << size_determine(head) << " nodes.\n\n";
+					break;
+				}
+
+				case 10: {
+					int pos1, pos2;
+					cout << "\n\"Swap means to interchange values of a node from another\"\n\n";
+					cout << "\n Enter from which position you need to swap: ";
+					cin >> pos1;
+					cout << "\n Enter the position you need to swap (to): ";
+					cin >> pos2;
+
+					if (pos1 <= 0 or pos2 > n or pos2 <= 0 or pos1 > n) {
+						cout << "\nOne or both of the positions don't exist in the list.\n\n";
+						break;
+					}
+
+					if (swap(head, pos1, pos2)) {
+						cout << "Your updated list is: ";
+						traverse_temp(head);
+					}
+					break;
+				}
+
+				default: {
+					bool opt = true;
+					if (press == 11 and opt != false) {
+						cout << "\nBye, Have a Good Day!!!\n";
+						fin = true;
+						break;
+					} else if (press > 11 or press <= 11 and opt != false) {
+						cout << "Invalid option\n";
+						cout << "\nPLease enter your choice here: ";
+						cin >> press;
+						break;
+					}
+					break;
+				}
+			}
+		} while (press != 11 and fin != true);
+	}
+            
