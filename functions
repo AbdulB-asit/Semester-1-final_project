@@ -1,0 +1,297 @@
+#include<iostream>
+#include<iomanip>
+using namespace std;
+
+// Node structure for a linked list
+struct node {
+    int data;
+    node* link;
+};
+
+// Function to insert a node at the beginning of the linked list
+void insert_beginning(node* &head, int x) {
+    node* newNode = new node;
+    newNode->data = x;
+    newNode->link = head->link;
+    head = newNode;
+}
+
+int size_determine(node* head) {
+    int size = 1;
+    node* temp = head;
+    while (temp->link != NULL) {
+        size++;
+        temp = temp->link;
+    }
+    return size;
+}
+
+// Function to insert a node at a specified position in the linked list
+bool insert_at(node* head, int pos, int size) {
+    int x;
+
+    if (pos == 0 or pos > size + 1) {
+        cout << "This position doesn't exist in the list.\n\n";
+        return false;
+    }
+
+    cout << "Enter the number: ";
+    cin >> x;
+    node* temp = head;
+    node* newNode = new node;
+    newNode->data = x;
+    newNode->link = NULL;
+
+    if (pos == 1) {
+        newNode->link = temp->link;
+        head = newNode;
+        return true;
+    }
+
+    pos--;
+    while (pos != 1) {
+        temp = temp->link;
+        pos--;
+    }
+    newNode->link = temp->link;
+    temp->link = newNode;
+
+    return true;
+}
+
+// Function to insert a node at the end of the linked list
+void insert_end(node* head, int x) {
+    node* newNode = new node;
+    newNode->data = x;
+    if (head->link == NULL) {
+        newNode->link = NULL;
+        head->link = newNode;
+    } else {
+        while (head->link != NULL) {
+            head = head->link;
+        }
+        head->link = newNode;
+        newNode->link = NULL;
+    }
+}
+
+// Function to delete the last node in the linked list
+void del_end(node* &head) {
+    if (head == NULL) {
+        return;
+    }
+    if (head->link == NULL) {
+        delete head;
+    }
+    node* sec_last = head;
+    while (sec_last->link->link != NULL) {
+        sec_last = sec_last->link;
+    }
+    delete(sec_last->link);
+    sec_last->link = NULL;
+}
+
+// Function to delete the first node in the linked list
+void del_head(node* &head) {
+    if (head == NULL)
+        return;
+
+    head = head->link;
+}
+
+// Function to delete a node at a specified position in the linked list
+void del_at(node*& head, int pos) {
+    node* prev = head;
+    node* curr = head;
+    if (head == NULL) {
+        cout << "List is already empty";
+        return;
+    }
+
+    if (pos == 1) {
+        head = curr->link;
+        curr->link = NULL;
+        curr = NULL;
+    }
+
+    node* temp = head;
+    for (int i = 1; i < pos - 1; ++i) {
+        if (temp->link != NULL)
+            temp = temp->link;
+    }
+    if (temp->link == NULL) {
+        cout << "Invalid position for deletion." << endl;
+    }
+
+    node* val = temp->link;
+    temp->link = val->link;
+    delete (val);
+}
+
+// Function to delete a node with a specific data value in the linked list
+void del_data(node*& head, int val) {
+    if (head == NULL)
+        return;
+    if (head->data == val) {
+        node* temp = head;
+        head = head->link;
+        delete temp;
+        return;
+    }
+    node* num = head;
+    while (num->link != NULL && num->link->data != val) {
+        num = num->link;
+    }
+    if (num->link == NULL) {
+        cout << "Value not found in the list." << endl;
+        return;
+    }
+    node* temp = num->link;
+    num->link = temp->link;
+    delete temp;
+}
+
+// Function to search for a node with a specific data value in the linked list
+node* search(node* head, int find) {
+    int count = 1;
+    if (head == NULL) {
+        return NULL;
+    }
+    if (head->data == find) {
+        cout << "The number " << find << " is found at position #0" << count << " of the list.\n\n";
+        return head;
+    }
+    while (head->data != find && head->link != NULL) {
+        count++;
+
+        head = head->link;
+    }
+
+    if (head->data != find and head->link == NULL) {
+        cout << "The number " << find << " is not found in the list.\n\n";
+        return head;
+    }
+
+    cout << "The number " << find << " is found at position #0" << count << " of the list.\n\n";
+
+    return head;
+}
+
+// Function to search for the value user needs to update in update_nodeNum function
+node* search_update(node* head, int find) {
+    int count = 1;
+    if (head == NULL) {
+        return NULL;
+    }
+    if (head->data == find) {
+        return head;
+    }
+    while (head->data != find && head->link != NULL) {
+        count++;
+        head = head->link;
+    }
+
+    if (head->data != find and head->link == NULL) {
+        cout << "The number " << find << " is not found in the list.\n\n";
+        return head;
+    }
+    return head;
+}
+
+// Function to sort the linked list in ascending order
+void sort(node* head) {
+    if (head->link == NULL || head == NULL) {
+        return;
+    }
+
+    node* nextNode = NULL;
+    while (head->link != NULL) {
+        nextNode = head->link;
+        while (nextNode != NULL) {
+            if (head->data > nextNode->data) {
+                int temp = head->data;
+                head->data = nextNode->data;
+                nextNode->data = temp;
+            }
+            nextNode = nextNode->link;
+        }
+        head = head->link;
+    }
+}
+
+// Function to reverse the linked list
+void reverse(node*& head) { // & used as calls the list by ref
+    node *prev = NULL, *next = NULL;
+
+    while (head != NULL) {
+        next = head->link;
+        head->link = prev; // changes the direction of pointer/node
+        prev = head;
+        head = next;
+    }
+    head = prev; // set the now first value as head
+}
+
+// Function to traverse and print the linked list
+void traverse(node* head) {
+    cout << "\nYour list is:\n\n";
+    while (head->link != NULL) {
+        cout << "|" << head->data << "|" << "  ";
+        head = head->link;
+    }
+    cout << "|" << head->data << "|" << "  ";
+    return;
+}
+
+void traverse_temp(node* head) {
+    cout << "\n\n";
+    while (head->link != NULL) {
+        cout << "|" << head->data << "|" << "  ";
+        head = head->link;
+    }
+    cout << "|" << head->data << "|" << "  ";
+    return;
+}
+
+bool update_nodeNum(node* head, int Find) {
+    int n;
+    cout << "Enter the number: ";
+    cin >> n;
+    node* temp = search_update(head, Find);
+    head = temp;
+    head->data = n;
+
+    return true;
+}
+
+bool swap(node* head, int pos1, int pos2) {
+    node* temp1 = head;
+    node* temp2 = head;
+    if (pos1 == pos2) {
+        cout << "\n Both positions can't be the same \n";
+        return false;
+    }
+    if (pos1 == 1) {
+        temp1 = head;
+    } else {
+        for (int i = 1; i < pos1; ++i) {
+            if (temp1->link != NULL) {
+                temp1 = temp1->link;
+            }
+        }
+    }
+    if (pos2 == 1) {
+        temp2 = head;
+    } else {
+        for (int i = 1; i < pos2; ++i) {
+            if (temp2->link != NULL) {
+                temp2 = temp2->link;
+            }
+        }
+    }
+    int temp;
+    temp = temp1->data;
+    temp1->data = temp2->data;
+    temp2->data = temp;
+    return true;
+}
