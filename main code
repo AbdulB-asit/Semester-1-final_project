@@ -5,15 +5,14 @@ int main() {
 
     int n, e, m, pos,num;
     string str;
-    char st;
+    char opt;
     int press; /*initializing further variables*/
     bool fin = false, kon = false;
     cout << setw(85) << right << "---------------------------------------------------------\n";
     cout << setw(85) << right << "\"Welcome respected user to the list management system!!!\"\n";
     cout << setw(86) << right << "---------------------------------------------------------\n\n";
     do {
-        cout << "Press \"c\" to continue or \"u\" to understand what a linked list is\"\n\n";
-        char opt;
+        cout << "Press \"c\" to continue or \"u\" to understand what a linked list is\": ";
         cin >> opt;
 
         switch (opt) {
@@ -24,11 +23,10 @@ int main() {
             }
                 break;
             case 'u': {
-                cout << "\n\nA linked list is a linear data structure, in which the elements are not stored at contiguous\n";
-                cout << "memory locations.The elements in a linked list are linked using pointers.\n";
-                cout << "In simple words, a linked list consists of nodes where each node contains a data field \n";
-                cout << "and a reference(link) to the next node in the list.\n\n";
-
+    cout << setw(86) << right << "-------------------------------------------------------------\n";
+    cout << setw(83) << right << " a linked list is a linear collection of data elements \n";
+    cout << setw(87) << right << " whose order isn't given by their physical placement in memory \n";
+    cout << setw(86) << right << "-------------------------------------------------------------\n";
                 cout << "how many nodes you would like in your list: ";
                 cin >> n;
                 kon = true;
@@ -77,11 +75,14 @@ int main() {
         switch (press) {
 
             case 1: {
+            	cout<<"Your list is: \n\n";
                 traverse(head);
                 break;
             }
 
             case 2: {
+            	cout<<"Your list is: \n\n";
+                traverse(head);
                 cout << "\n\nPlease tell at which position you want to add your number: ";
                 cin >> pos;
 
@@ -92,27 +93,79 @@ int main() {
 
                 if (insert_at(head, pos, size_determine(head))) {
                     cout << "Your updated list is: ";
-                    traverse_temp(head);
+                    traverse(head);
                 }
                 break;
             }
 
             case 3: {
+            	traverse(head);
+            	
                 int num;
                 cout << "\n\nPlease tell which number you need to update: ";
                 cin >> num;
 
                 if (update_nodeNum(head, num)) {
                     cout << "Your updated list is: ";
-                    traverse_temp(head);
+                    traverse(head);
                 }
-
                 break;
             }
-//            case 4: {
-//            	
-//				break;
-//			}
+            case 4: {
+            	cout<<"\n\nDo you really want to delete the head(1st node) of your list(Y,N): ";
+            	cin >> opt;
+            		if(opt == 'n' or opt == 'N')
+            		break;
+            		
+            	switch(opt) {
+            		case 'y':
+					case 'Y': {	
+					if(head->link == NULL){
+						cout<<"\n\nList is now empty...\n\nYou can or should initialilze the list again.\n";
+						cout<<"Do you need to continue(c) or end(e) the program?: ";
+						cin >> opt;
+						switch(opt) {
+							case 'c':
+							case 'C': {
+						            cout << "how many nodes you would like in your list: ";
+                					cin >> n;
+									    for (int i = 1; i <= n; i++) {
+									        if (i == 1) {
+									            cout << "enter number #01: ";
+									            cin >> e;
+									            insert_beginning(head, e);
+									        } else {
+									            cout << "enter number #0" << i << ": ";
+									            cin >> e;
+									            insert_end(head, e);
+									        }
+									    }                					
+								break;
+							}
+							case 'e':
+							case 'E': {
+								cout << "\nBye, Have a Good Day!!!\n";
+								return 0;
+								break;
+							}	
+						}
+					}else{						
+            			cout << "deleting head...\n";
+            			del_head(head);
+            			cout << "Your updated list is: ";
+            			traverse(head);
+						break;
+					}			
+					}
+					default: {
+						cout << "Enter a valid option.\n\n";
+//            			cout<<"\n\nDo you really want to delete the head(1st node) of your list(Y,N): ";
+//            			cin >> opt;					
+						break;
+					}
+				}
+				break;
+			}
 				case 5: {
 					cout << "Do you want to enter the number (num) or the position (pos) of the node in the list? ";
 					cin >> str;
@@ -130,7 +183,7 @@ int main() {
 
 
 					cout << "The updated list is: \n";
-					traverse_temp(head);
+					traverse(head);
 
 					break;
 				}
@@ -145,22 +198,22 @@ int main() {
 
 				case 7: {
 					cout << "The original list was: ";
-					traverse_temp(head);
+					traverse(head);
 
 					reverse(head);
 					cout << "\nThe list reversed is: \n";
-					traverse_temp(head);
+					traverse(head);
 
 					break;
 				}
 
 				case 8: {
 					cout << "The original list was: ";
-					traverse_temp(head);
+					traverse(head);
 
 					sort(head);
 					cout << "\nThe sorted list is: \n";
-					traverse_temp(head);
+					traverse(head);
 
 					break;
 				}
@@ -185,22 +238,19 @@ int main() {
 
 					if (swap(head, pos1, pos2)) {
 						cout << "Your updated list is: ";
-						traverse_temp(head);
+						traverse(head);
 					}
 					break;
 				}
 
 				default: {
-					bool opt = true;
+					opt = true;
 					if (press == 11 and opt != false) {
 						cout << "\nBye, Have a Good Day!!!\n";
 						fin = true;
 						break;
 					} else if (press > 11 or press <= 11 and opt != false) {
 						cout << "Invalid option\n";
-						cout << "\nPLease enter your choice here: ";
-						cin >> press;
-						break;
 					}
 					break;
 				}
