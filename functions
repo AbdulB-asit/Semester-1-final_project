@@ -93,10 +93,12 @@ void del_end(node* &head) {
 
 // Function to delete the first node in the linked list
 void del_head(node* &head) {
-    if (head == NULL)
+    if (head == NULL){
         return;
-
-    head = head->link;
+	}
+	node* temp = head;
+	head= head->link;
+	delete temp;
 }
 
 // Function to delete a node at a specified position in the linked list
@@ -234,16 +236,6 @@ void reverse(node*& head) { // & used as calls the list by ref
 
 // Function to traverse and print the linked list
 void traverse(node* head) {
-    cout << "\nYour list is:\n\n";
-    while (head->link != NULL) {
-        cout << "|" << head->data << "|" << "  ";
-        head = head->link;
-    }
-    cout << "|" << head->data << "|" << "  ";
-    return;
-}
-
-void traverse_temp(node* head) {
     cout << "\n\n";
     while (head->link != NULL) {
         cout << "|" << head->data << "|" << "  ";
