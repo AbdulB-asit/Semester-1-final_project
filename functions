@@ -12,14 +12,14 @@ struct node {
 void insert_beginning(node* &head, int x) {
     node* newNode = new node;
     newNode->data = x;
-    newNode->link = head->link;
+    newNode->link = head->link; // inserts a new node behind head
     head = newNode;
 }
 // Function to get the linked lists size
 int size_determine(node* head) {
-    int size = 1;
+    int size = 1; // starting index is from 1 and not 0
     node* temp = head;
-    while (temp->link != NULL) {
+    while (temp->link != NULL) { //runs till the end of list
         size++;
         temp = temp->link;
     }
@@ -30,7 +30,7 @@ int size_determine(node* head) {
 bool insert_at(node* &head, int pos, int size) {
     int x;
 
-    if (pos == 0 or pos > size + 1) {
+    if (pos == 0 or pos > size + 1) { //checks if the pos is outside of lists range
         cout << "This position doesn't exist in the list.\n\n";
         return false;
     }
@@ -42,14 +42,14 @@ bool insert_at(node* &head, int pos, int size) {
     newNode->data = x;
     newNode->link = NULL;
 
-    if (pos == 1) {
+    if (pos == 1) { //directly inserts behind previous head
         newNode->link = temp;
         head= newNode;
         return true;
     }
 
-    pos--;
-    while (pos != 1) {
+    pos--;//computer indexes run from 0 so reduce the entered pos by 1
+    while (pos != 1) { // Runs till reaching the pos in list
         temp = temp->link;
         pos--;
     }
@@ -63,11 +63,11 @@ bool insert_at(node* &head, int pos, int size) {
 void insert_end(node* head, int x) {
     node* newNode = new node;
     newNode->data = x;
-    if (head->link == NULL) {
+    if (head->link == NULL) { // if list only has head
         newNode->link = NULL;
         head->link = newNode;
     } else {
-        while (head->link != NULL) {
+        while (head->link != NULL) {// runs till the end of list
             head = head->link;
         }
         head->link = newNode;
@@ -77,14 +77,11 @@ void insert_end(node* head, int x) {
 
 // Function to delete the last node in the linked list
 void del_end(node* &head) {
-    if (head == NULL) {
-        return;
-    }
-    if (head->link == NULL) {
+    if (head->link == NULL) {// if head is the only element in list
         delete head;
     }
     node* sec_last = head;
-    while (sec_last->link->link != NULL) {
+    while (sec_last->link->link != NULL) {// runs till the end of list
         sec_last = sec_last->link;
     }
     delete(sec_last->link);
@@ -93,9 +90,6 @@ void del_end(node* &head) {
 
 // Function to delete the first node in the linked list
 void del_head(node* &head) {
-    if (head == NULL){
-        return;
-        }
         node* temp = head;
         head= head->link;
         delete temp;
@@ -105,20 +99,16 @@ void del_head(node* &head) {
 void del_at(node*& head, int pos) {
     node* prev = head;
     node* curr = head;
-    if (head == NULL) {
-        cout << "List is already empty";
-        return;
-    }
-
-    if (pos == 1) {
+    if (pos == 1) { // deletes the head node
         head = curr->link;
         curr->link = NULL;
         curr = NULL;
+        delete (curr);
         return;
     }
 
     node* temp = head;
-    for (int i = 1; i < pos - 1; ++i) {
+    for (int i = 1; i < pos - 1; ++i) {// runs till the specified pos in list
         if (temp->link != NULL)
             temp = temp->link;
     }
@@ -133,19 +123,17 @@ void del_at(node*& head, int pos) {
 
 // Function to delete a node with the user specificied data value in the linked list
 void del_data(node*& head, int val) {
-    if (head == NULL)
-        return;
-    if (head->data == val) {
+    if (head->data == val) { //head has the specified val for deletion
         node* temp = head;
         head = head->link;
         delete temp;
         return;
     }
     node* num = head;
-    while (num->link != NULL && num->link->data != val) {
+    while (num->link != NULL && num->link->data != val) {// else move through list to find it
         num = num->link;
     }
-    if (num->link == NULL) {
+    if (num->link == NULL) {// if val not found in list
         cout << "Value not found in the list." << endl;
         return;
     }
@@ -157,20 +145,17 @@ void del_data(node*& head, int val) {
 // Function to search for a node with a user specificied data value in the linked list
 node* search(node* head, int find) {
     int count = 1;
-    if (head == NULL) {
-        return NULL;
-    }
-    if (head->data == find) {
+    if (head->data == find) { //head has the specified val(find)
         cout << "The number " << find << " is found at position #" << count << " of the list.\n\n";
         return head;
     }
-    while (head->data != find && head->link != NULL) {
+    while (head->data != find && head->link != NULL) {// else move through list to find it
         count++;
 
         head = head->link;
     }
 
-    if (head->data != find and head->link == NULL) {
+    if (head->data != find and head->link == NULL) {// if val not found in list
         cout << "The number " << find << " is not found in the list.\n\n";
         return head;
     }
@@ -180,12 +165,10 @@ node* search(node* head, int find) {
     return head;
 }
 
-// Function to search for the value user needs to update in update_nodeNum function
+// Function copy to search for the value user needs to update in update_nodeNum function
 node* search_update(node* head, int find) {
     int count = 1;
-    if (head == NULL) {
-        return NULL;
-    }
+
     if (head->data == find) {
         return head;
     }
@@ -203,10 +186,10 @@ node* search_update(node* head, int find) {
 
 // Function to sort the linked list in ascending order
 void sort(node* head) {
-    if (head->link == NULL || head == NULL) {
+    if (head->link == NULL || head == NULL) {// only head is in list
         return;
     }
-
+        //bubble sort method to sort the list
     node* nextNode = NULL;
     while (head->link != NULL) {
         nextNode = head->link;
@@ -250,8 +233,7 @@ bool update_nodeNum(node* head, int Find) {
     int n;
     cout << "Enter the number: ";
     cin >> n;
-    node* temp = search_update(head, Find);
-    head = temp;
+        head = search_update(head, Find);// use the search function to find the specific value
     head->data = n;
 
     return true;
@@ -260,26 +242,19 @@ bool update_nodeNum(node* head, int Find) {
 bool swap(node* head, int pos1, int pos2) {
     node* temp1 = head;
     node* temp2 = head;
-    if (pos1 == pos2) {
+    if (pos1 == pos2) {// check if both positions are same
         cout << "\n Both positions can't be the same \n";
         return false;
     }
-    if (pos1 == 1) {
-        temp1 = head;
-    } else {
-        for (int i = 1; i < pos1; ++i) {
-            if (temp1->link != NULL) {
-                temp1 = temp1->link;
-            }
+    for (int i = 1; i < pos1; ++i) {// run till the specific pos
+        if (temp1->link != NULL) {
+            temp1 = temp1->link;
         }
     }
-    if (pos2 == 1) {
-        temp2 = head;
-    } else {
-        for (int i = 1; i < pos2; ++i) {
-            if (temp2->link != NULL) {
-                temp2 = temp2->link;
-            }
+
+    for (int i = 1; i < pos2; ++i) {// run till the specific pos
+        if (temp2->link != NULL) {
+            temp2 = temp2->link;
         }
     }
     int temp;
