@@ -42,11 +42,11 @@ int main() {
 
     for (int i = 1; i <= n; i++) {
         if (i == 1) {
-            cout << "enter number #01: ";
+            cout << "enter number #1: ";
             cin >> e;
             insert_beginning(head, e);
         } else {
-            cout << "enter number #0" << i << ": ";
+            cout << "enter number #" << i << ": ";
             cin >> e;
             insert_end(head, e);
         }
@@ -74,14 +74,14 @@ int main() {
 
         switch (press) {
 
-            case 1: {
-            	cout<<"Your list is: \n\n";
+            case 1: { //To print list
+                    cout<<"Your list is: \n\n";
                 traverse(head);
                 break;
             }
 
-            case 2: {
-            	cout<<"Your list is: \n\n";
+            case 2: { // Insert a number into list
+                    cout<<"Your list is: \n\n";
                 traverse(head);
                 cout << "\n\nPlease tell at which position you want to add your number: ";
                 cin >> pos;
@@ -98,9 +98,9 @@ int main() {
                 break;
             }
 
-            case 3: {
-            	traverse(head);
-            	
+            case 3: {// Update node
+                    traverse(head);
+
                 int num;
                 cout << "\n\nPlease tell which number you need to update: ";
                 cin >> num;
@@ -111,150 +111,143 @@ int main() {
                 }
                 break;
             }
-            case 4: {
-            	cout<<"\n\nDo you really want to delete the head(1st node) of your list(Y,N): ";
-            	cin >> opt;
-            		if(opt == 'n' or opt == 'N')
-            		break;
-            		
-            	switch(opt) {
-            		case 'y':
-					case 'Y': {	
-					if(head->link == NULL){
-						cout<<"\n\nList is now empty...\n\nYou can or should initialilze the list again.\n";
-						cout<<"Do you need to continue(c) or end(e) the program?: ";
-						cin >> opt;
-						switch(opt) {
-							case 'c':
-							case 'C': {
-						            cout << "how many nodes you would like in your list: ";
-                					cin >> n;
-									    for (int i = 1; i <= n; i++) {
-									        if (i == 1) {
-									            cout << "enter number #01: ";
-									            cin >> e;
-									            insert_beginning(head, e);
-									        } else {
-									            cout << "enter number #0" << i << ": ";
-									            cin >> e;
-									            insert_end(head, e);
-									        }
-									    }                					
-								break;
-							}
-							case 'e':
-							case 'E': {
-								cout << "\nBye, Have a Good Day!!!\n";
-								return 0;
-								break;
-							}	
-						}
-					}else{						
-            			cout << "deleting head...\n";
-            			del_head(head);
-            			cout << "Your updated list is: ";
-            			traverse(head);
-						break;
-					}			
-					}
-					default: {
-						cout << "Enter a valid option.\n\n";
-//            			cout<<"\n\nDo you really want to delete the head(1st node) of your list(Y,N): ";
-//            			cin >> opt;					
-						break;
-					}
-				}
-				break;
-			}
-				case 5: {
-					cout << "Do you want to enter the number (num) or the position (pos) of the node in the list? ";
-					cin >> str;
+            case 4: { // delete head of list
+                    cout<<"\n\nDo you really want to delete the head(1st node) of your list(Y,N): ";
+                    cin >> opt;
+                            if(opt == 'n' or opt == 'N')
+                            break;
 
-					if (str == "pos"){
-						cout<<"Enter the position: ";					
-						cin >> pos;
-						del_at(head, pos);
-					}
-						else if(str == "num"){							
-							cout<<"Enter the number: ";
-							cin >> num;
-							del_data(head,num);
-						}
+                    switch(opt) {
+                            case 'y':
+                                        case 'Y': {        
+                                        if(head->link == NULL){
+                                                cout<<"\n\nList is now empty...\n\nYou can or should initialilze the list again.\n";
+                                                cout<<"Do you need to continue(c) or end(e) the program?: ";
+                                                cin >> opt;
+                                                switch(opt) {
+                                                        case 'c':
+                                                        case 'C': {
+                                                            cout << "how many nodes you would like in your list: ";
+                                                        cin >> n;
+                                                                            for (int i = 1; i <= n; i++) {
+                                                                                if (i == 1) {
+                                                                                    cout << "enter number #01: ";
+                                                                                    cin >> e;
+                                                                                    insert_beginning(head, e);
+                                                                                } else {
+                                                                                    cout << "enter number #0" << i << ": ";
+                                                                                    cin >> e;
+                                                                                    insert_end(head, e);
+                                                                                }
+                                                                            }                                                        
+                                                                break;
+                                                        }
+                                                        case 'e':
+                                                        case 'E': {
+                                                                cout << "\nBye, Have a Good Day!!!\n";
+                                                                return 0;
+                                                                break;
+                                                        }        
+                                                }
+                                        }else{                                                
+                                    cout << "deleting head...\n";
+                                    del_head(head);
+                                    cout << "Your updated list is: ";
+                                    traverse(head);
+                                                break;
+                                        }                        
+                                        }
+                                        default: {
+                                                cout << "Enter a valid option.\n\n";                                
+                                                break;
+                                        }
+                                }
+                                break;
+                        }
+                                case 5: {// delete specific data or a specific node
+                                        cout << "Do you want to enter the number (num) or the position (pos) of the node in the list?\n";
+                                        cin >> str;
+
+                                        if (str == "pos"){
+                                                cout<<"Enter the position: ";                                        
+                                                cin >> pos;
+                                                del_at(head, pos);
+                                        }
+                                                else if(str == "num"){                                                        
+                                                        cout<<"Enter the number: ";
+                                                        cin >> num;
+                                                        del_data(head,num);
+                                                }
 
 
-					cout << "The updated list is: \n";
-					traverse(head);
+                                        cout << "The updated list is: \n";
+                                        traverse(head);
 
-					break;
-				}
+                                        break;
+                                }
 
-				case 6: {
-					cout << "Enter which number to find: ";
-					cin >> m;
-					search(head, m);
+                                case 6: {// search for the user entered number
+                                        cout << "Enter which number to find: ";
+                                        cin >> m;
+                                        search(head, m);
 
-					break;
-				}
+                                        break;
+                                }
 
-				case 7: {
-					cout << "The original list was: ";
-					traverse(head);
+                                case 7: {// reverse the list
+                                        cout << "The original list was: ";
+                                        traverse(head);
 
-					reverse(head);
-					cout << "\nThe list reversed is: \n";
-					traverse(head);
+                                        reverse(head);
+                                        cout << "\nThe list reversed is: \n";
+                                        traverse(head);
 
-					break;
-				}
+                                        break;
+                                }
 
-				case 8: {
-					cout << "The original list was: ";
-					traverse(head);
+                                case 8: {// sort the list
+                                        cout << "The original list was: ";
+                                        traverse(head);
 
-					sort(head);
-					cout << "\nThe sorted list is: \n";
-					traverse(head);
+                                        sort(head);
+                                        cout << "\nThe sorted list is: \n";
+                                        traverse(head);
 
-					break;
-				}
+                                        break;
+                                }
 
-				case 9: {
-					cout << "\nThe size of your list is: " << size_determine(head) << " nodes.\n\n";
-					break;
-				}
+                                case 9: {// get the size of list
+                                        cout << "\nThe size of your list is: " << size_determine(head) << " nodes.\n\n";
+                                        break;
+                                }
 
-				case 10: {
-					int pos1, pos2;
-					cout << "\n\"Swap means to interchange values of a node from another\"\n\n";
-					cout << "\n Enter from which position you need to swap: ";
-					cin >> pos1;
-					cout << "\n Enter the position you need to swap (to): ";
-					cin >> pos2;
+                                case 10: {// swap the value of nodes
+                                        int pos1, pos2;
+                                        cout << "\n\"Swap means to interchange values of a node from another\"\n\n";
+                                        cout << "\n Enter from which position you need to swap: ";
+                                        cin >> pos1;
+                                        cout << "\n Enter the position you need to swap (to): ";
+                                        cin >> pos2;
 
-					if (pos1 <= 0 or pos2 > n or pos2 <= 0 or pos1 > n) {
-						cout << "\nOne or both of the positions don't exist in the list.\n\n";
-						break;
-					}
+                                        if (swap(head, pos1, pos2)) {
+                                                cout << "Your updated list is: ";
+                                                traverse(head);
+                                        }
+                                        break;
+                                }
 
-					if (swap(head, pos1, pos2)) {
-						cout << "Your updated list is: ";
-						traverse(head);
-					}
-					break;
-				}
-
-				default: {
-					opt = true;
-					if (press == 11 and opt != false) {
-						cout << "\nBye, Have a Good Day!!!\n";
-						fin = true;
-						break;
-					} else if (press > 11 or press <= 11 and opt != false) {
-						cout << "Invalid option\n";
-					}
-					break;
-				}
-			}
-		} while (press != 11 and fin != true);
-	}
-            
+                                default: {
+                                        opt = true;
+                                        if (press == 11 and opt != false) {
+                                                cout << "\nBye, Have a Good Day!!!\n";
+                                                fin = true;
+                                                break;
+                                        } else if (press > 11 or press <= 11 and opt != false) {
+                                                cout << "Invalid option\n";
+                                        }
+                                        break;
+                                }
+                        }
+                } while (press != 11 and fin != true);
+        }
+    
