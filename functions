@@ -8,14 +8,14 @@ struct node {
     node* link;
 };
 
-// Function to insert a node at the beginning of the linked list
+// Function to make a new head node
 void insert_beginning(node* &head, int x) {
     node* newNode = new node;
     newNode->data = x;
     newNode->link = head->link;
     head = newNode;
 }
-
+// Function to get the linked lists size
 int size_determine(node* head) {
     int size = 1;
     node* temp = head;
@@ -27,7 +27,7 @@ int size_determine(node* head) {
 }
 
 // Function to insert a node at a specified position in the linked list
-bool insert_at(node* head, int pos, int size) {
+bool insert_at(node* &head, int pos, int size) {
     int x;
 
     if (pos == 0 or pos > size + 1) {
@@ -43,8 +43,8 @@ bool insert_at(node* head, int pos, int size) {
     newNode->link = NULL;
 
     if (pos == 1) {
-        newNode->link = temp->link;
-        head = newNode;
+        newNode->link = temp;
+        head= newNode;
         return true;
     }
 
@@ -95,13 +95,13 @@ void del_end(node* &head) {
 void del_head(node* &head) {
     if (head == NULL){
         return;
-	}
-	node* temp = head;
-	head= head->link;
-	delete temp;
+        }
+        node* temp = head;
+        head= head->link;
+        delete temp;
 }
 
-// Function to delete a node at a specified position in the linked list
+// Function to delete a node at a user specified position in the linked list
 void del_at(node*& head, int pos) {
     node* prev = head;
     node* curr = head;
@@ -114,6 +114,7 @@ void del_at(node*& head, int pos) {
         head = curr->link;
         curr->link = NULL;
         curr = NULL;
+        return;
     }
 
     node* temp = head;
@@ -130,7 +131,7 @@ void del_at(node*& head, int pos) {
     delete (val);
 }
 
-// Function to delete a node with a specific data value in the linked list
+// Function to delete a node with the user specificied data value in the linked list
 void del_data(node*& head, int val) {
     if (head == NULL)
         return;
@@ -153,14 +154,14 @@ void del_data(node*& head, int val) {
     delete temp;
 }
 
-// Function to search for a node with a specific data value in the linked list
+// Function to search for a node with a user specificied data value in the linked list
 node* search(node* head, int find) {
     int count = 1;
     if (head == NULL) {
         return NULL;
     }
     if (head->data == find) {
-        cout << "The number " << find << " is found at position #0" << count << " of the list.\n\n";
+        cout << "The number " << find << " is found at position #" << count << " of the list.\n\n";
         return head;
     }
     while (head->data != find && head->link != NULL) {
@@ -174,7 +175,7 @@ node* search(node* head, int find) {
         return head;
     }
 
-    cout << "The number " << find << " is found at position #0" << count << " of the list.\n\n";
+    cout << "The number " << find << " is found at position #" << count << " of the list.\n\n";
 
     return head;
 }
@@ -244,7 +245,7 @@ void traverse(node* head) {
     cout << "|" << head->data << "|" << "  ";
     return;
 }
-
+//Function to change a user specified date within a node
 bool update_nodeNum(node* head, int Find) {
     int n;
     cout << "Enter the number: ";
@@ -255,7 +256,7 @@ bool update_nodeNum(node* head, int Find) {
 
     return true;
 }
-
+// Function to swap the values between 2 nodes chosen by user
 bool swap(node* head, int pos1, int pos2) {
     node* temp1 = head;
     node* temp2 = head;
