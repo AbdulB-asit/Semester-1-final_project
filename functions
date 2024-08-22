@@ -1,3 +1,4 @@
+
 #include<iostream>
 #include<iomanip>
 using namespace std;
@@ -10,6 +11,9 @@ struct node {
 
 // Function to make a new head node
 void insert_beginning(node* &head, int x) {
+	if (head == NULL) {
+		return;
+	}
     node* newNode = new node;
     newNode->data = x;
     newNode->link = head->link; // inserts a new node behind head
@@ -28,6 +32,10 @@ int size_determine(node* head) {
 
 // Function to insert a node at a specified position in the linked list
 bool insert_at(node* &head, int pos, int size) {
+	
+	if (head == NULL) {
+		return;
+	}
     int x;
 
     if (pos == 0 or pos > size + 1) { //checks if the pos is outside of lists range
@@ -61,6 +69,11 @@ bool insert_at(node* &head, int pos, int size) {
 
 // Function to insert a node at the end of the linked list
 void insert_end(node* head, int x) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
     node* newNode = new node;
     newNode->data = x;
     if (head->link == NULL) { // if list only has head
@@ -77,6 +90,11 @@ void insert_end(node* head, int x) {
 
 // Function to delete the last node in the linked list
 void del_end(node* &head) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
     if (head->link == NULL) {// if head is the only element in list
         delete head;
     }
@@ -90,6 +108,11 @@ void del_end(node* &head) {
 
 // Function to delete the first node in the linked list
 void del_head(node* &head) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
         node* temp = head;
         head= head->link;
         delete temp;
@@ -97,6 +120,11 @@ void del_head(node* &head) {
 
 // Function to delete a node at a user specified position in the linked list
 void del_at(node*& head, int pos) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
     node* prev = head;
     node* curr = head;
     if (pos == 1) { // deletes the head node
@@ -123,6 +151,11 @@ void del_at(node*& head, int pos) {
 
 // Function to delete a node with the user specificied data value in the linked list
 void del_data(node*& head, int val) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
     if (head->data == val) { //head has the specified val for deletion
         node* temp = head;
         head = head->link;
@@ -207,6 +240,11 @@ void sort(node* head) {
 
 // Function to reverse the linked list
 void reverse(node*& head) { // & used as calls the list by ref
+
+	if (head == NULL) {
+		return;
+	}
+
     node *prev = NULL, *next = NULL;
 
     while (head != NULL) {
@@ -220,6 +258,11 @@ void reverse(node*& head) { // & used as calls the list by ref
 
 // Function to traverse and print the linked list
 void traverse(node* head) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
     cout << "\n\n";
     while (head->link != NULL) {
         cout << "|" << head->data << "|" << "  ";
@@ -240,6 +283,11 @@ bool update_nodeNum(node* head, int Find) {
 }
 // Function to swap the values between 2 nodes chosen by user
 bool swap(node* head, int pos1, int pos2) {
+	
+	if (head == NULL) {
+		return;
+	}	
+	
     node* temp1 = head;
     node* temp2 = head;
     if (pos1 == pos2) {// check if both positions are same
